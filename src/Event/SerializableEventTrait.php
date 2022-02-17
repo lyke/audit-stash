@@ -18,6 +18,16 @@ trait SerializableEventTrait
     }
 
     /**
+     * Magic method for serializing the Event instance.
+     *
+     * @return array
+     */
+    public function __serialize(): array
+    {
+        return get_object_vars($this);
+    }
+
+    /**
      * Takes the string representation of this object so it can be reconstructed.
      *
      * @param string $data serialized string
@@ -27,6 +37,19 @@ trait SerializableEventTrait
     {
         $vars = unserialize($data);
         foreach ($vars as $var => $value) {
+            $this->{$var} = $value;
+        }
+    }
+
+    /**
+     * Magic method for unserializing the Event data.
+     *
+     * @param array $data The serialized data
+     * @return void
+     */
+    public function __unserialize(array $data): void
+    {
+        foreach ($data as $var => $value) {
             $this->{$var} = $value;
         }
     }
