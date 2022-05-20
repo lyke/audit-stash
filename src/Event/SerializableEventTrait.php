@@ -12,7 +12,7 @@ trait SerializableEventTrait
      *
      * @return string
      */
-    public function serialize()
+    public function serialize(): string
     {
         return serialize(get_object_vars($this));
     }
@@ -33,7 +33,7 @@ trait SerializableEventTrait
      * @param string $data serialized string
      * @return void
      */
-    public function unserialize($data)
+    public function unserialize(string $data): void
     {
         $vars = unserialize($data);
         foreach ($vars as $var => $value) {
@@ -59,7 +59,7 @@ trait SerializableEventTrait
      *
      * @return void
      */
-    protected function basicSerialize()
+    protected function basicSerialize(): array
     {
         return [
             'type' => $this->getEventType(),
